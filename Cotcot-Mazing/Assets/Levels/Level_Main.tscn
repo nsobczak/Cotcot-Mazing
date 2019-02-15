@@ -9,6 +9,7 @@
 [node name="Grid" parent="." index="0" instance=ExtResource( 1 )]
 
 _sections_unfolded = [ "Transform" ]
+size = Vector2( 10, 10 )
 cellSize = Vector2( 24, 24 )
 
 [node name="PawnChicken" parent="Grid" index="0" instance=ExtResource( 2 )]
@@ -16,12 +17,10 @@ cellSize = Vector2( 24, 24 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 25 )
 script = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
-speed = 25
-direction = Vector3( 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Grid/PawnChicken" index="2"]
 
-transform = Transform( -1.49502e-08, 0.939693, -0.34202, 4.10753e-08, 0.34202, 0.939693, 1, 0, -4.37114e-08, -8.3869, 40.4679, 1.17298 )
+transform = Transform( -1.49502e-08, 0.939693, -0.34202, 4.10753e-08, 0.34202, 0.939693, 1, 0, -4.37114e-08, -8.3869, 170, 1.17298 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
