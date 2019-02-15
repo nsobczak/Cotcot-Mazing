@@ -10,13 +10,13 @@ func _ready():
 
 
 func _input(deltaVal):
-	if Input.is_action_just_released("ui_left"):
+	if Input.is_action_just_pressed("ui_left"):
 		self.grid.moveLeft(self.name)
-	if Input.is_action_just_released("ui_right") :
+	if Input.is_action_just_pressed("ui_right") :
 		self.grid.moveRight(self.name)
-	if Input.is_action_just_released("ui_up"):
+	if Input.is_action_just_pressed("ui_up"):
 		self.grid.moveUp(self.name)
-	if Input.is_action_just_released("ui_down"):
+	if Input.is_action_just_pressed("ui_down"):
 		self.grid.moveDown(self.name)
 
 
