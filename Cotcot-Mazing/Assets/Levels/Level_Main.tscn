@@ -14,7 +14,7 @@ script = ExtResource( 1 )
 
 _sections_unfolded = [ "Transform" ]
 jsonLevelsPath = "res://Assets/Levels/JsonLevels"
-jsonLevelFileName = "Level001.json"
+jsonLevelFileName = "Level003.json"
 gridName = "Level"
 gSize = Vector2( 20, 20 )
 cellSize = Vector2( 24, 24 )

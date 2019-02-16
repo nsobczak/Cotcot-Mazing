@@ -1,6 +1,6 @@
 extends Spatial
 
-enum CELL_NATURE { OBSTACLE = -1, EMPTY, ACTOR, PICKUP}
+enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP}
 
 # class member variables
 export(String) var jsonLevelsPath = "res://Assets/Levels/JsonLevels"
@@ -75,6 +75,8 @@ func _generate():
 			# set nature depending on where walls should be
 			var nature = int(jsonCells[len(jsonCells) -1 -j][i])
 			match nature:
+				-2:
+					cellScene_instance.setNature(VOID)
 				-1:
 					cellScene_instance.setNature(OBSTACLE)
 				1:

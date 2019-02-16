@@ -1,6 +1,6 @@
 extends Spatial
 
-enum CELL_NATURE { OBSTACLE = -1, EMPTY, ACTOR, PICKUP}
+enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP}
 
 export(String) var wallPath = "res://Assets/World/BasicCube/BasicCube.tscn"
 export(String) var pickupPath = "res://Assets/World/Pickup/Pickup.tscn"
@@ -42,7 +42,10 @@ func _initializeCellChildren():
 #			print("Cell is obstacle - name = " + wall_instance.name)
 
 		EMPTY:
-#			print("Cell is empty")
+			pass
+			
+		VOID:
+			find_node("EmptyCell").visible = false
 			pass
 
 		ACTOR:
