@@ -3,7 +3,7 @@ extends Spatial
 enum CELL_NATURE { OBSTACLE = -1, EMPTY, ACTOR, PICKUP}
 
 # class member variables go here, for example:
-export(Vector2) var size = Vector2(20, 20)
+export(Vector2) var gSize = Vector2(20, 20)
 export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
 export(Vector2) var cellSize = Vector2(24, 24)
 export(float) var cellMargin = 3
@@ -11,17 +11,28 @@ export(Vector2) var playerStartCell = Vector2(0, 0)
 export var obstaclesArray = [Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(5, 5), Vector2(8, 4)]
 export var pickupsArray = [Vector2(1, 0), Vector2(2, 0), Vector2(3, 0), Vector2(5, 4), Vector2(7, 4)]
 
+var _realGridSize
 var _gridPositionToReal = {}
 var _gridPositionCell = {}
 var _gridActorNameToGridPositions = {}
 
 
 #_________________________________________________________________________________________
+func _computeRealGridSize():
+	self._realGridSize = Vector2( \
+		self.gSize.x * self.cellSize.x + (self.gSize.x - 1) * self.cellMargin, \
+		self.gSize.y * self.cellSize.y + (self.gSize.y - 1) * self.cellMargin)
+
+func getRealGridSize():
+	if self._realGridSize == null:
+		_computeRealGridSize()
+	return self._realGridSize
+	
 func _generate():
 	var cellScene = load(self.cellScenePath)
 	
-	for i in range(0, self.size.x):
-		for j in range(0, self.size.y):
+	for i in range(0, self.gSize.x):
+		for j in range(0, self.gSize.y):
 			var cellPosition = Vector2((i+1) * (self.cellSize.x + cellMargin), (j+1) * (self.cellSize.y + cellMargin))
 #			print("cell ({0}, {1}) position is: ({2}, {3})" \
 #			.format([i, j, cellPosition.x, cellPosition.y]))
@@ -55,9 +66,10 @@ func _initActorPositions():
 
 
 func _ready():
-	# Called when the node is added to the scene for the first time.	
-	print("grid bottom left corner position: ", self.transform.origin)
-
+#	print("grid bottom left corner position: ", self.transform.origin)
+	var gridSize = getRealGridSize()
+	print("real grid size = ", gridSize)
+	
 	# add cells instances
 	_generate()
 	_initActorPositions()

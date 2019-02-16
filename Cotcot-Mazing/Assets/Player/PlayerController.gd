@@ -1,6 +1,6 @@
 extends KinematicBody
 
-onready var grid = get_parent()
+onready var _grid = get_parent()
 
 var _pickupNumber = 0
 var _checkInputCheckRate = 0.25
@@ -16,16 +16,20 @@ func _ready():
 
 func _checkInput():
 	if Input.is_action_just_pressed("ui_left"):
-		self.grid.moveLeft(self.name)
+		self._grid.moveLeft(self.name)
+		self.rotation_degrees = Vector3(0, 90, 0)
 		_timer = 0
 	if Input.is_action_just_pressed("ui_right") :
-		self.grid.moveRight(self.name)
+		self._grid.moveRight(self.name)
+		self.rotation_degrees = Vector3(0, -90, 0)
 		_timer = 0
 	if Input.is_action_just_pressed("ui_up"):
-		self.grid.moveUp(self.name)
+		self.rotation_degrees = Vector3(0, 0, 0)
+		self._grid.moveUp(self.name)
 		_timer = 0
 	if Input.is_action_just_pressed("ui_down"):
-		self.grid.moveDown(self.name)
+		self.rotation_degrees = Vector3(0, 180, 0)
+		self._grid.moveDown(self.name)
 		_timer = 0
 
 
