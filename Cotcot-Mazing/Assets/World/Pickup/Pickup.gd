@@ -9,6 +9,9 @@ var _value = 1
 func getValue():
 	return self._value
 
+func setValue(newValue):
+	self._value = newValue
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	pass

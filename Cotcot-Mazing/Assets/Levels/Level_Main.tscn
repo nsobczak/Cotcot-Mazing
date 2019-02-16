@@ -16,7 +16,7 @@ size = Vector2( 10, 10 )
 cellSize = Vector2( 24, 24 )
 cellMargin = 3
 playerStartCell = Vector2( 1, 1 )
-obstaclesArray = [ Vector2( 0, 1 ) ]
+obstaclesArray = [ Vector2( 0, 1 ), Vector2( 0, 2 ), Vector2( 0, 3 ), Vector2( 5, 5 ), Vector2( 8, 4 ) ]
 pickupsArray = [ Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 5, 4 ), Vector2( 7, 4 ) ]
 
 [node name="Player" parent="Grid" index="0" instance=ExtResource( 3 )]

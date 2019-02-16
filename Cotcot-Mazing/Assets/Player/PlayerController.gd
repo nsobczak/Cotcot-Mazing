@@ -2,7 +2,6 @@ extends KinematicBody
 
 onready var grid = get_parent()
 
-
 var _pickupNumber = 0
 var _checkInputCheckRate = 0.25
 var _timer = 0

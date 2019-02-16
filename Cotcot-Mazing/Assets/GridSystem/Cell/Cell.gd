@@ -22,8 +22,8 @@ func removeFromActorOnCell(actorName):
 func delete(actor):
 	if actor.name in self._actorOnCell:
 		removeFromActorOnCell(actor.name)
-	print("deleting {0}".format([actor.name]))
-	actor.free() #queue_free
+#	print("deleting {0}".format([actor.name]))
+	actor.queue_free() #queue_free
 
 func getActorOnCell():
 	return self._actorOnCell
@@ -39,7 +39,7 @@ func _initializeCellChildren():
 			wall_instance.set_name(self.name + "_wall")
 			wall_instance.transform.origin = Vector3(0, 0, 0)
 			addToActorOnCell(wall_instance.name)
-			print("Cell is obstacle - name = " + wall_instance.name)
+#			print("Cell is obstacle - name = " + wall_instance.name)
 
 		EMPTY:
 #			print("Cell is empty")
@@ -69,8 +69,8 @@ func getNature():
 
 func setNature(newNature):
 	self.nature = newNature
-	#TODO: remove before reinitialize
-	_initializeCellChildren()
+	#TODO: remove before reinitialize?
+#	_initializeCellChildren()
 
 
 func findActorByName(actorName):
