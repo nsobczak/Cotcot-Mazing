@@ -10,12 +10,16 @@ size = Vector2( 2, 2 )
 subdivide_width = 0
 subdivide_depth = 0
 
-[node name="Cell" type="Spatial" index="0"]
+[node name="Cell" type="Spatial"]
 
 script = ExtResource( 1 )
+wallPath = "res://Assets/World/BasicCube/BasicCube.tscn"
+pickupPath = "res://Assets/World/Pickup/Pickup.tscn"
 nature = null
 
 [node name="EmptyCell" parent="." index="0" instance=ExtResource( 2 )]
+
+editor/display_folded = true
 
 [node name="MeshInstance" type="MeshInstance" parent="EmptyCell" index="2"]
 

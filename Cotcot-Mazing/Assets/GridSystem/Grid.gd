@@ -8,7 +8,7 @@ export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
 export(Vector2) var cellSize = Vector2(24, 24)
 export(float) var cellMargin = 3
 export(Vector2) var playerStartCell = Vector2(0, 0)
-export var obstaclesArray = [Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(5, 5), Vector2(8, 4)]
+export var obstaclesArray = [Vector2(0, 1)] # [Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(5, 5), Vector2(8, 4)]
 export var pickupsArray = [Vector2(1, 0), Vector2(2, 0), Vector2(3, 0), Vector2(5, 4), Vector2(7, 4)]
 
 var _gridPositionToReal = {}
@@ -39,7 +39,6 @@ func _generate():
 				cellScene_instance.setNature(OBSTACLE)
 			elif (Vector2(i, j) in self.pickupsArray):
 				cellScene_instance.setNature(PICKUP)
-				#TODO: instantiate pickup + add it to cellActor list
 			else:
 				cellScene_instance.setNature(EMPTY)
 			add_child(cellScene_instance)
@@ -101,6 +100,7 @@ func canMoveToCell(gridCoordinates):
 func updateActorGridPosition(actorName, newGridPosition):
 	var actor = findActorByName(actorName)
 	var oldCell = findCellWithActorName(actorName)
+	var newCell = self._gridPositionCell[newGridPosition]
 	
 	if (actor != null):
 		# update actor position in grid
@@ -111,10 +111,22 @@ func updateActorGridPosition(actorName, newGridPosition):
 		var worldPosition = self._gridPositionToReal[gridPosition]
 		actor.transform.origin = Vector3(worldPosition.y, 0, worldPosition.x)
 		
-		# update cell _actorNameOnCell
-		if (oldCell != null):
-			oldCell.removeToActorOnCell(actorName)
-			self._gridPositionCell[newGridPosition].addToActorOnCell(actorName)
+		if (newCell != null):
+			# update cell _actorNameOnCell
+			if (oldCell != null):
+				oldCell.removeFromActorOnCell(actorName)
+				newCell.addToActorOnCell(actorName)
+	
+			# TODO: if pickup is in newCell => delete it and add it to player
+			if (newCell.getNature() == PICKUP):
+				var pickup = newCell.findActorByName(newCell.name + "_pickup") #TODO: here
+				if (pickup != null):
+					$Player.updatePickupNumber(pickup.getValue())
+#					newCell.removeFromActorOnCell(pickup.name)
+					newCell.delete(pickup)
+				else:
+					print("error: pickup is null")
+				pass
 
 
 #_________________________________________________________________________________________
@@ -128,8 +140,7 @@ func moveActor(actorNameToMove, gridCoordinates):
 func moveUp(actorNameToMove):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x, currentCellPos.y + 1)
-	if canMoveToCell(newCell):
-		updateActorGridPosition(actorNameToMove, newCell)
+	moveActor(actorNameToMove, newCell)
 #	else:
 #		print("can't move to cell above")
 
@@ -137,8 +148,8 @@ func moveUp(actorNameToMove):
 func moveRight(actorNameToMove):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x + 1, currentCellPos.y)
-	if canMoveToCell(newCell):
-		updateActorGridPosition(actorNameToMove, newCell)
+	print("oldCell = {0} | newCell = {1}".format([currentCellPos, newCell]))
+	moveActor(actorNameToMove, newCell)
 #	else:
 #		print("can't move to right cell")
 
@@ -146,8 +157,7 @@ func moveRight(actorNameToMove):
 func moveDown(actorNameToMove):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x, currentCellPos.y - 1)
-	if canMoveToCell(newCell):
-		updateActorGridPosition(actorNameToMove, newCell)
+	moveActor(actorNameToMove, newCell)
 #	else:
 #		print("can't move to cell underneath")
 
@@ -155,8 +165,7 @@ func moveDown(actorNameToMove):
 func moveLeft(actorNameToMove):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x - 1, currentCellPos.y)
-	if canMoveToCell(newCell):
-		updateActorGridPosition(actorNameToMove, newCell)
+	moveActor(actorNameToMove, newCell)
 #	else:
 #		print("can't move to left cell")
 

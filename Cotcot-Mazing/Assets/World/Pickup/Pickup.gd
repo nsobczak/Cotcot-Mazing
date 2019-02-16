@@ -1,7 +1,13 @@
 extends Spatial
 
 # class member variables go here, for example:
-export(Vector3) var rotationAngles = Vector3(40,40,0)
+export(Vector3) var rotationAngles = Vector3(40, 40, 0)
+
+var _value = 1
+
+
+func getValue():
+	return self._value
 
 func _ready():
 	# Called when the node is added to the scene for the first time.

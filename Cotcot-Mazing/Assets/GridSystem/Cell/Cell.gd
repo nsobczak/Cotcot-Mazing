@@ -16,8 +16,14 @@ func isActorOnCell(actorName):
 func addToActorOnCell(actorName):
 	self._actorOnCell.append(actorName)
 
-func removeToActorOnCell(actorName):
+func removeFromActorOnCell(actorName):
 	self._actorOnCell.remove(actorName)
+
+func delete(actor):
+	if actor.name in self._actorOnCell:
+		removeFromActorOnCell(actor.name)
+	print("deleting {0}".format([actor.name]))
+	actor.free() #queue_free
 
 func getActorOnCell():
 	return self._actorOnCell
@@ -29,11 +35,11 @@ func _initializeCellChildren():
 		OBSTACLE:
 			var wallScene = load(self.wallPath)
 			var wall_instance = wallScene.instance()
-#			wall_instance.set_name("wall_({0}.0,{1}.0)".format([i, j]))
+			self.add_child(wall_instance)
+			wall_instance.set_name(self.name + "_wall")
 			wall_instance.transform.origin = Vector3(0, 0, 0)
 			addToActorOnCell(wall_instance.name)
-			add_child(wall_instance)
-#			print("Cell is obstacle")
+			print("Cell is obstacle - name = " + wall_instance.name)
 
 		EMPTY:
 #			print("Cell is empty")
@@ -46,10 +52,10 @@ func _initializeCellChildren():
 		PICKUP:
 			var pickupScene = load(self.pickupPath)
 			var pickup_instance = pickupScene.instance()
-#			pickup_instance.set_name("wall_({0}.0,{1}.0)".format([i, j]))
+			self.add_child(pickup_instance)
+			pickup_instance.set_name(self.name + "_pickup")
 			pickup_instance.transform.origin = Vector3(0, 0, 0)
 			addToActorOnCell(pickup_instance.name)
-			add_child(pickup_instance)
 #			print("Cell is PICKUP")
 
 	
@@ -65,6 +71,14 @@ func setNature(newNature):
 	self.nature = newNature
 	#TODO: remove before reinitialize
 	_initializeCellChildren()
+
+
+func findActorByName(actorName):
+	for childNode in self.get_children():
+		if (childNode.name == actorName):
+			return childNode
+	print("{0} wasn't found".format([actorName]))
+	return null
 
 
 #func findInActorOnCell(actorName):
