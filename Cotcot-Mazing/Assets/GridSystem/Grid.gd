@@ -13,6 +13,7 @@ export(Vector2) var cellSize = Vector2(24, 24)
 export(float) var cellMargin = 3
 export(Vector2) var playerStartCell = Vector2(0, 0)
 
+var _pickupTotal = 0
 
 var _jsonGrid = {}
 var _realGridSize
@@ -85,6 +86,7 @@ func _generate():
 					self.playerStartCell = Vector2(i, j)
 				2:
 					cellScene_instance.setNature(PICKUP)
+					_pickupTotal += 1
 				_:#default
 					cellScene_instance.setNature(EMPTY)
 			add_child(cellScene_instance)
@@ -219,6 +221,9 @@ func updateActorGridPosition(actorName, currentCellNature, newGridPosition):
 		var pickup = newCell.findActorByName(newCell.name + "_pickup")
 		if (pickup != null):
 			$Player.updatePickupNumber(pickup.getValue())
+			if $Player.getPickupNumber() >= _pickupTotal:
+				levelCompleted()
+			
 			newCell.delete(pickup)
 			newCell.setNature(EMPTY)
 

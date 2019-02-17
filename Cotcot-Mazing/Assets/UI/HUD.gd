@@ -5,6 +5,7 @@ extends VBoxContainer
 var _labelPickup
 var _player
 
+
 func _ready():
 	_labelPickup = find_node("LabelPickup")
 	_player = get_parent().find_node("Player")
@@ -12,4 +13,5 @@ func _ready():
 
 func _process(delta):
 	if _player != null:
-		_labelPickup.text = "Pickups: {0}".format([_player.getPickupNumber()])
+		_labelPickup.text = "Pickups: {0}/{1}".format([\
+			_player.getPickupNumber(), _player._grid._pickupTotal])

@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/UI/Buttons/BCredits.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/UI/Buttons/BQuit.tscn" type="PackedScene" id=4]
 
-[node name="MainMenu" type="MarginContainer"]
+[node name="MainMenu" type="MarginContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -80,7 +80,7 @@ valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Margin", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Size Flags" ]
 
 [node name="BArcade" parent="MarginContainer/VBoxContainer" index="1" instance=ExtResource( 1 )]
 
@@ -105,6 +105,7 @@ anchor_bottom = 0.0
 margin_top = 348.0
 margin_right = 976.0
 margin_bottom = 444.0
+BCreator = "Creator: nsobczak"
 
 [node name="BQuit" parent="MarginContainer/VBoxContainer" index="4" instance=ExtResource( 4 )]
 
