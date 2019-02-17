@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/UI/Buttons/BChangeScene.gd" type="Script" id=1]
 
-[node name="BArcade" type="Button" index="0"]
+[node name="BMenu" type="Button" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -19,11 +19,11 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Arcade"
+text = "Menu"
 flat = false
 align = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Anchor", "Focus", "Margin", "Mouse", "Size Flags", "custom_styles" ]
-sceneToOpen = "res://Assets/Levels/Level_Main.tscn"
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Mouse", "Size Flags" ]
+sceneToOpen = "res://Assets/Levels/MainMenu.tscn"
 
 

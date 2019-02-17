@@ -4,7 +4,6 @@ export(String) var sceneToOpen = "res://Assets/Levels/Level_Main.tscn"
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
-
 	pass
 
 #func _process(delta):
@@ -12,5 +11,6 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func _pressed ():
+func _pressed():
+	LevelSelection.changeLevelFileName(true)
 	get_tree().change_scene(sceneToOpen)

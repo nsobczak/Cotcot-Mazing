@@ -3,8 +3,8 @@ extends Spatial
 enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 
 # class member variables
-#export(String) var jsonLevelsPath = "res://Assets/Levels/JsonLevels"
-#export(String) var jsonLevelFileName = "Level001.json"
+export(String) var screenGameOverPath = "res://Assets/UI/Screens/ScreenGameOver.tscn"
+export(String) var screenLevelResultPath = "res://Assets/UI/Screens/ScreenLevelResult.tscn"
 export(String) var gridName = "Level"
 export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
 export(String) var tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
@@ -112,7 +112,15 @@ func _ready():
 	if self._eggScene == null:
 		print ("error: eggScene couldn't be loaded")
 
+
 #_________________________________________________________________________________________
+func gameOver():
+	get_tree().change_scene(screenGameOverPath)
+
+func levelCompleted():
+	get_tree().change_scene(screenLevelResultPath)
+
+
 func findActorByName(actorName):
 	for childNode in self.get_children():
 		if (childNode.name == actorName):
@@ -220,7 +228,7 @@ func updateActorGridPosition(actorName, currentCellNature, newGridPosition):
 			print("error: pickup is null")
 	
 	elif (newCell.getNature() == EGG):
-		print("GAME OVER")
+		gameOver()
 	
 	# update cell data
 	newCell.setNature(currentCellNature)
