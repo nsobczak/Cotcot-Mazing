@@ -15,27 +15,37 @@ func getNextElement():
 	return self._nextElement
 
 func getLastElement():
-	if self._nextElement != null:
+	if self._nextElement == null:
 		return self
 	else:
-		return self._nextElement
+		return self._nextElement.getLastElement()
 
 func isLastElement():
 	return (self._nextElement == null)
 
+func addLastElement(newElt):
+	var currentLastElt = getLastElement()
+	currentLastElt.addNextElement(newElt)
+
 func moveTail(newCell):
-	var newGridPos = self._grid._gridActorNameToGridPositions[newCell.name]
-	self.oldGridCellCoord = self.currentGridCellCoord
-	self.currentGridCellCoord = newGridPos
-	self.transform.origin = self._grid._gridPositionToReal[newGridPos]
+#	print("called moveTail({0})".format([newCell.name]))
+	var newGridPos = _grid._gridActorNameToGridPositions[newCell.name]
+	updateCurrentCell(newGridPos)
+	
+	var oldCell = _grid._gridPositionCell[self.oldGridCellCoord]
+	var realPos = _grid._gridPositionToReal[newGridPos]
+	self.transform.origin = Vector3(realPos.y, 0, realPos.x)
+	newCell.setNature(_grid.EGG)
+	newCell.addToActorOnCell(newCell.name)
 	
 	if(isLastElement()):
-		#TODO:here change old cell (with no egg) to EMPTY
-		pass
+		if oldCell != null:
+			oldCell.setNature(_grid.EMPTY)
+			oldCell.removeFromActorOnCell(oldCell.name)
+
 	else:
-		getNextElement().moveTail(self.oldGridCellCoord)
-		pass
-	
+		getNextElement().moveTail(oldCell)
+
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

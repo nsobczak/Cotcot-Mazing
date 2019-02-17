@@ -95,8 +95,7 @@ func _initActorPositions():
 	for childNode in self.get_children():
 		if (childNode.name == "Player"):
 #			print("init player position")
-			updateActorGridPosition(childNode.name, self.playerStartCell)
-			self._gridPositionCell[self.playerStartCell].addToActorOnCell(childNode.name)
+			updateActorGridPosition(childNode.name, ACTOR, self.playerStartCell)
 
 
 func _ready():
@@ -151,95 +150,120 @@ func growTail(oldCell):
 	# instantiate egg
 	var eggScene_instance = self._eggScene.instance()
 	add_child(eggScene_instance)
+	var eggGridPosition
 	var eggRealPosition
 	
 	if $Player.getTailHead() == null:
 		# cell at gridCoord is empty => spawn here
-		print(oldCell.name)
-		eggRealPosition = self._gridPositionToReal[\
-			self._gridActorNameToGridPositions[oldCell.name]]
+		eggGridPosition = self._gridActorNameToGridPositions[oldCell.name]
+		eggRealPosition = self._gridPositionToReal[eggGridPosition]
 		$Player.setTailHead(eggScene_instance)
 		oldCell.setNature(EGG)
 
 	else:
 		#(cell at gridCoord has a tail element) => spawn at end of tail
-		var lastEltOldCellCoord = $Player.getTailHead().getLastElement().oldGridCellCoord
-		var lastEltOldCell = self._gridPositionCell[lastEltOldCellCoord]
-		eggRealPosition = self._gridPositionToReal[lastEltOldCellCoord]
-		lastEltOldCell.setNature(EGG)
+		var lastTailElement = $Player.getTailHead().getLastElement()
+		lastTailElement.addLastElement(eggScene_instance)
+		var lastEltOldCellCoord = lastTailElement.oldGridCellCoord
+
+		eggGridPosition = lastEltOldCellCoord
+		eggRealPosition = self._gridPositionToReal[eggGridPosition]
 		
+		var lastEltOldCell = self._gridPositionCell[lastEltOldCellCoord]
+		lastEltOldCell.setNature(EGG)
+
+	self._gridActorNameToGridPositions[eggScene_instance.name] = eggGridPosition
+	eggScene_instance.updateCurrentCell(eggGridPosition)
+	
 	eggScene_instance.transform.origin = Vector3(eggRealPosition.y, 0, eggRealPosition.x)
 
 
-func updateActorGridPosition(actorName, newGridPosition):
+func updateActorGridPosition(actorName, currentCellNature, newGridPosition):
 	var actor = findActorByName(actorName)
+	if (actor == null):
+		return
+
 	var oldCell = findCellWithActorName(actorName)
+	if (oldCell != null):
+		oldCell.removeFromActorOnCell(actorName)
+	
 	var newCell = self._gridPositionCell[newGridPosition]
+	if (newCell == null):
+		return
+	newCell.addToActorOnCell(actorName)
+
+	# update actor position in grid
+	self._gridActorNameToGridPositions[actorName] = newGridPosition #Vector2()
 	
-	if (actor != null):
-		# update actor position in grid
-		self._gridActorNameToGridPositions[actorName] = newGridPosition #Vector2()
-		
-		# update actual actor position
-		var gridPosition = self._gridActorNameToGridPositions[actorName]
-		var worldPosition = self._gridPositionToReal[gridPosition]
-		actor.transform.origin = Vector3(worldPosition.y, 0, worldPosition.x)
-		
-		if (newCell != null):
-			# update cell _actorNameOnCell
-			if (oldCell != null):
-				oldCell.removeFromActorOnCell(actorName)
-				newCell.addToActorOnCell(actorName)
+	# update actual actor position
+	var gridPosition = self._gridActorNameToGridPositions[actorName]
+	var worldPosition = self._gridPositionToReal[gridPosition]
+	actor.transform.origin = Vector3(worldPosition.y, 0, worldPosition.x)
+	actor.updateCurrentCell(newGridPosition)
 	
-			# if pickup is in newCell => delete it and add it to player
-			if (newCell.getNature() == PICKUP):
-				var pickup = newCell.findActorByName(newCell.name + "_pickup") #TODO: here
-				if (pickup != null):
-					$Player.updatePickupNumber(pickup.getValue())
-					newCell.delete(pickup)
-					newCell.setNature(EMPTY)
-					
-					growTail(oldCell)
-				else:
-					print("error: pickup is null")
+	if (currentCellNature == ACTOR) and  ($Player.getTailHead() != null):
+		$Player.getTailHead().moveTail(oldCell)
+#		print("move tail, last elt = {0}".format([$Player.getTailHead().getLastElement().name]))
+	
+	# if pickup is in newCell => delete it and add it to player
+	if (newCell.getNature() == PICKUP):
+#		print("getNature() == PICKUP")
+		var pickup = newCell.findActorByName(newCell.name + "_pickup")
+		if (pickup != null):
+			$Player.updatePickupNumber(pickup.getValue())
+			newCell.delete(pickup)
+			newCell.setNature(EMPTY)
+
+			growTail(oldCell)
+			
+		else:
+			print("error: pickup is null")
+	
+	elif (newCell.getNature() == EGG):
+		print("GAME OVER")
+	
+	# update cell data
+	newCell.setNature(currentCellNature)
+	if (oldCell != null):
+		oldCell.setNature(EMPTY)
 
 
 #_________________________________________________________________________________________
-func moveActor(actorNameToMove, gridCoordinates):
+func moveActor(actorNameToMove, currentCellNature, gridCoordinates):
 	if canMoveToCell(gridCoordinates):
-		updateActorGridPosition(actorNameToMove, gridCoordinates)
+		updateActorGridPosition(actorNameToMove, currentCellNature, gridCoordinates)
 #	else:
 #		print("can't move to that cell")
 
 
-func moveUp(actorNameToMove):
+func moveUp(actorNameToMove, currentCellNature):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x, currentCellPos.y + 1)
-	moveActor(actorNameToMove, newCell)
+	moveActor(actorNameToMove, currentCellNature, newCell)
 #	else:
 #		print("can't move to cell above")
 
 
-func moveRight(actorNameToMove):
+func moveRight(actorNameToMove, currentCellNature):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x + 1, currentCellPos.y)
-	moveActor(actorNameToMove, newCell)
+	moveActor(actorNameToMove, currentCellNature, newCell)
 #	else:
 #		print("can't move to right cell")
 
 
-func moveDown(actorNameToMove):
+func moveDown(actorNameToMove, currentCellNature):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x, currentCellPos.y - 1)
-	moveActor(actorNameToMove, newCell)
+	moveActor(actorNameToMove, currentCellNature, newCell)
 #	else:
 #		print("can't move to cell underneath")
 
 
-func moveLeft(actorNameToMove):
+func moveLeft(actorNameToMove, currentCellNature):
 	var currentCellPos = self._gridActorNameToGridPositions[actorNameToMove]
 	var newCell = Vector2(currentCellPos.x - 1, currentCellPos.y)
-	moveActor(actorNameToMove, newCell)
+	moveActor(actorNameToMove, currentCellNature, newCell)
 #	else:
 #		print("can't move to left cell")
 

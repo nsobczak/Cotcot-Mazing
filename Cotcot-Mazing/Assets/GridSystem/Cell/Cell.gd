@@ -17,7 +17,8 @@ func addToActorOnCell(actorName):
 	self._actorOnCell.append(actorName)
 
 func removeFromActorOnCell(actorName):
-	self._actorOnCell.remove(actorName)
+#	print("removing {0} from actor on cell {1} | new array size = {2}".format([actorName, self.name, len(self._actorOnCell)]))
+	self._actorOnCell.erase(actorName)
 
 func delete(actor):
 	if actor.name in self._actorOnCell:

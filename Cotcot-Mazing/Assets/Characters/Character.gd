@@ -22,4 +22,5 @@ func _ready():
 func updateCurrentCell(newCell):
 	self.oldGridCellCoord = self.currentGridCellCoord
 	self.currentGridCellCoord = newCell
+#	print("old cell coor = {0} | new cell coor = {1}".format([self.oldGridCellCoord, self.currentGridCellCoord]))
 
