@@ -1,7 +1,6 @@
-extends KinematicBody
+extends "Character.gd"
 
-onready var _grid = get_parent()
-
+var _tailHead
 var _pickupNumber = 0
 var _checkInputCheckRate = 0.25
 var _timer = 0
@@ -51,3 +50,9 @@ func setPickupNumber(newValue):
 func updatePickupNumber(amount):
 	self._pickupNumber += amount
 	return self._pickupNumber
+
+func getTailHead():
+	return self._tailHead
+
+func setTailHead(newElement):
+	self._tailHead = newElement

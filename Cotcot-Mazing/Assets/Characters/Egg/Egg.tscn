@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Characters/Egg/egg.dae" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Characters/Egg/Egg.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Characters/Chicken/palette_001.material" type="Material" id=3]
+
+[node name="Egg" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="egg" parent="." index="0"]
+
+material/0 = ExtResource( 3 )
+_sections_unfolded = [ "material" ]
+
+

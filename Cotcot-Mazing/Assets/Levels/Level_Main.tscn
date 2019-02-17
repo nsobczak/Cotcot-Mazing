@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/Levels/Level_Main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/GridSystem/Grid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Characters/Chicken/PawnChicken.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Player/PlayerController.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Characters/PlayerController.gd" type="Script" id=4]
 [ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=5]
 
 [node name="Root" type="Spatial" index="0"]
@@ -16,6 +16,7 @@ _sections_unfolded = [ "Transform" ]
 jsonLevelsPath = "res://Assets/Levels/JsonLevels"
 jsonLevelFileName = "Level003.json"
 gridName = "Level"
+tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
 gSize = Vector2( 20, 20 )
 cellSize = Vector2( 24, 24 )
 cellMargin = 3

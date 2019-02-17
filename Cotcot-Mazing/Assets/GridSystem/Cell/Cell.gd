@@ -1,6 +1,6 @@
 extends Spatial
 
-enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP}
+enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 
 export(String) var wallPath = "res://Assets/World/BasicCube/BasicCube.tscn"
 export(String) var pickupPath = "res://Assets/World/Pickup/Pickup.tscn"
@@ -61,6 +61,9 @@ func _initializeCellChildren():
 			addToActorOnCell(pickup_instance.name)
 #			print("Cell is PICKUP")
 
+		_:
+			pass
+
 	
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -75,6 +78,8 @@ func setNature(newNature):
 	#TODO: remove before reinitialize?
 #	_initializeCellChildren()
 
+func isEmpty():
+	return (self.nature == EMPTY)
 
 func findActorByName(actorName):
 	for childNode in self.get_children():

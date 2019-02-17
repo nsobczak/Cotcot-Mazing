@@ -1,24 +1,25 @@
 extends Spatial
 
-enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP}
+enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 
 # class member variables
 export(String) var jsonLevelsPath = "res://Assets/Levels/JsonLevels"
 export(String) var jsonLevelFileName = "Level001.json"
 export(String) var gridName = "Level"
-export(Vector2) var gSize = Vector2(20, 20)
 export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
+export(String) var tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
+export(Vector2) var gSize = Vector2(20, 20)
 export(Vector2) var cellSize = Vector2(24, 24)
 export(float) var cellMargin = 3
 export(Vector2) var playerStartCell = Vector2(0, 0)
-#export var obstaclesArray = [Vector2(0, 1), Vector2(0, 2), Vector2(0, 3), Vector2(5, 5), Vector2(8, 4)]
-#export var pickupsArray = [Vector2(1, 0), Vector2(2, 0), Vector2(3, 0), Vector2(5, 4), Vector2(7, 4)]
+
 
 var _jsonGrid = {}
 var _realGridSize
 var _gridPositionToReal = {}
 var _gridPositionCell = {}
 var _gridActorNameToGridPositions = {}
+var _eggScene
 
 
 #_________________________________________________________________________________________
@@ -69,7 +70,7 @@ func _generate():
 			var cellScene_instance = cellScene.instance()
 			self._gridPositionCell[Vector2(i, j)] = cellScene_instance
 			cellScene_instance.set_name("cellScene_({0}.0,{1}.0)".format([i, j]))
-#			print("cellScene_({0}.0,{1}.0)".format([i, j]))
+			self._gridActorNameToGridPositions[cellScene_instance.name] = Vector2(i, j)
 			cellScene_instance.transform.origin = Vector3(cellPosition.y, 0, cellPosition.x)
 			
 			# set nature depending on where walls should be
@@ -107,7 +108,10 @@ func _ready():
 	# add cells instances
 	_generate()
 	_initActorPositions()
-
+	
+	self._eggScene = load(self.tailElementPath)
+	if self._eggScene == null:
+		print ("error: eggScene couldn't be loaded")
 
 #_________________________________________________________________________________________
 func findActorByName(actorName):
@@ -143,6 +147,30 @@ func canMoveToCell(gridCoordinates):
 		return false
 
 
+func growTail(oldCell):
+	# instantiate egg
+	var eggScene_instance = self._eggScene.instance()
+	add_child(eggScene_instance)
+	var eggRealPosition
+	
+	if $Player.getTailHead() == null:
+		# cell at gridCoord is empty => spawn here
+		print(oldCell.name)
+		eggRealPosition = self._gridPositionToReal[\
+			self._gridActorNameToGridPositions[oldCell.name]]
+		$Player.setTailHead(eggScene_instance)
+		oldCell.setNature(EGG)
+
+	else:
+		#(cell at gridCoord has a tail element) => spawn at end of tail
+		var lastEltOldCellCoord = $Player.getTailHead().getLastElement().oldGridCellCoord
+		var lastEltOldCell = self._gridPositionCell[lastEltOldCellCoord]
+		eggRealPosition = self._gridPositionToReal[lastEltOldCellCoord]
+		lastEltOldCell.setNature(EGG)
+		
+	eggScene_instance.transform.origin = Vector3(eggRealPosition.y, 0, eggRealPosition.x)
+
+
 func updateActorGridPosition(actorName, newGridPosition):
 	var actor = findActorByName(actorName)
 	var oldCell = findCellWithActorName(actorName)
@@ -170,9 +198,10 @@ func updateActorGridPosition(actorName, newGridPosition):
 					$Player.updatePickupNumber(pickup.getValue())
 					newCell.delete(pickup)
 					newCell.setNature(EMPTY)
+					
+					growTail(oldCell)
 				else:
 					print("error: pickup is null")
-				pass
 
 
 #_________________________________________________________________________________________
