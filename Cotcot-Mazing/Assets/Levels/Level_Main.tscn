@@ -1,19 +1,27 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Levels/Level_Main.gd" type="Script" id=1]
-[ext_resource path="res://Assets/GridSystem/Grid.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Characters/Chicken/PawnChicken.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Characters/PlayerController.gd" type="Script" id=4]
-[ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=5]
+[ext_resource path="res://Assets/UI/HUD.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UI/HUD.gd" type="Script" id=3]
+[ext_resource path="res://Assets/GridSystem/Grid.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Characters/Chicken/PawnChicken.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Characters/PlayerController.gd" type="Script" id=6]
+[ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=7]
 
-[node name="Root" type="Spatial"]
+[node name="Root" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
 jsonLevelFileName = "Level001.json"
 
-[node name="Grid" parent="." index="0" instance=ExtResource( 2 )]
+[node name="HUD" parent="." index="0" instance=ExtResource( 2 )]
+
+script = ExtResource( 3 )
+
+[node name="Grid" parent="." index="1" instance=ExtResource( 4 )]
 
 _sections_unfolded = [ "Transform" ]
+screenGameOverPath = "res://Assets/UI/Screens/ScreenGameOver.tscn"
+screenLevelResultPath = "res://Assets/UI/Screens/ScreenLevelResult.tscn"
 gridName = "Level"
 tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
 gSize = Vector2( 20, 20 )
@@ -21,10 +29,10 @@ cellSize = Vector2( 24, 24 )
 cellMargin = 3
 playerStartCell = Vector2( 1, 1 )
 
-[node name="Player" parent="Grid" index="0" instance=ExtResource( 3 )]
+[node name="Player" parent="Grid" index="0" instance=ExtResource( 5 )]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 25 )
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera" type="Camera" parent="Grid" index="1"]
@@ -42,12 +50,12 @@ fov = 70.0
 size = 1.0
 near = 0.05
 far = 500.0
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 _sections_unfolded = [ "Pause", "Transform", "Visibility" ]
 followPlayer = true
 playerNodeName = "Player"
 
-[node name="DirectionalLight" type="DirectionalLight" parent="." index="1"]
+[node name="DirectionalLight" type="DirectionalLight" parent="." index="2"]
 
 transform = Transform( -0.939693, 0.296198, -0.17101, 0, 0.5, 0.866025, 0.34202, 0.813798, -0.469846, 0, 40, 0 )
 layers = 1
