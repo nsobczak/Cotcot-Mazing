@@ -6,15 +6,14 @@
 [ext_resource path="res://Assets/Characters/PlayerController.gd" type="Script" id=4]
 [ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=5]
 
-[node name="Root" type="Spatial" index="0"]
+[node name="Root" type="Spatial"]
 
 script = ExtResource( 1 )
+jsonLevelFileName = "Level001.json"
 
 [node name="Grid" parent="." index="0" instance=ExtResource( 2 )]
 
 _sections_unfolded = [ "Transform" ]
-jsonLevelsPath = "res://Assets/Levels/JsonLevels"
-jsonLevelFileName = "Level001.json"
 gridName = "Level"
 tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
 gSize = Vector2( 20, 20 )

@@ -3,8 +3,8 @@ extends Spatial
 enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 
 # class member variables
-export(String) var jsonLevelsPath = "res://Assets/Levels/JsonLevels"
-export(String) var jsonLevelFileName = "Level001.json"
+#export(String) var jsonLevelsPath = "res://Assets/Levels/JsonLevels"
+#export(String) var jsonLevelFileName = "Level001.json"
 export(String) var gridName = "Level"
 export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
 export(String) var tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
@@ -25,7 +25,7 @@ var _eggScene
 #_________________________________________________________________________________________
 func _readJsonLevel():
 	var file = File.new()
-	var pathToFile = jsonLevelsPath + "/" + jsonLevelFileName
+	var pathToFile = Global.getLevelsPath() + "/" + Global.getLevelFileName()
 	file.open(pathToFile, file.READ)
 	var tmp_text = file.get_as_text()
 	file.close()
