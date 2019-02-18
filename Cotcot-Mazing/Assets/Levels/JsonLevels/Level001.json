@@ -12,6 +12,8 @@
         24
       ],
       "cellMargin": 3,
+      "wallSceneName": "BasicCube.tscn",
+      "pickupSceneName": "Pickup.tscn",
       "cells": [ [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
                 [-1,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,-1],
                 [-1,0 ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,-1],

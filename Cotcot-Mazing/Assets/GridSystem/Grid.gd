@@ -5,9 +5,11 @@ enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 # class member variables
 export(String) var screenGameOverPath = "res://Assets/UI/Screens/ScreenGameOver.tscn"
 export(String) var screenLevelResultPath = "res://Assets/UI/Screens/ScreenLevelResult.tscn"
+
 export(String) var gridName = "Level"
 export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
 export(String) var tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
+
 export(Vector2) var gSize = Vector2(20, 20)
 export(Vector2) var cellSize = Vector2(24, 24)
 export(float) var cellMargin = 3
@@ -35,12 +37,16 @@ func _readJsonLevel():
 	if (self._jsonGrid != null):
 		self.gridName = self._jsonGrid["Level"]["name"]
 		print("loading "+ self.gridName + " from " + pathToFile)
+		
 		self.gSize = Vector2(self._jsonGrid["Level"]["grid"]["size"][0],\
 			self._jsonGrid["Level"]["grid"]["size"][1])
 		self.cellSize = Vector2(self._jsonGrid["Level"]["grid"]["cellSize"][0],\
 			self._jsonGrid["Level"]["grid"]["cellSize"][1])
 		self.cellMargin = self._jsonGrid["Level"]["grid"]["cellMargin"]
 		
+		Global.wallSceneName = self._jsonGrid["Level"]["grid"]["wallSceneName"]
+		Global.pickupSceneName = self._jsonGrid["Level"]["grid"]["pickupSceneName"]
+	
 	else:
 		print("error: data is null")
 
@@ -59,7 +65,6 @@ func getRealGridSize():
 func _generate():
 	var cellScene = load(self.cellScenePath)
 	var jsonCells = self._jsonGrid["Level"]["grid"]["cells"]
-	
 	for i in range(0, self.gSize.x):
 		for j in range(0, self.gSize.y):
 			var cellPosition = Vector2((i+1) * (self.cellSize.x + cellMargin), (j+1) * (self.cellSize.y + cellMargin))

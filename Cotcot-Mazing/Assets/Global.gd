@@ -4,6 +4,11 @@ extends Node
 export(String) var _jsonLevelsPath = "res://Assets/Levels/JsonLevels"
 export(String) var _jsonLevelFileName = "Level001.json"
 
+export(String) var wallScenePath = "res://Assets/World/Walls"
+export(String) var wallSceneName = "BasicCube.tscn"
+export(String) var pickupScenePath = "res://Assets/World/Pickups"
+export(String) var pickupSceneName = "Pickup.tscn"
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	pass

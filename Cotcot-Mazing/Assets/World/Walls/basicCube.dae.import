@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/basicCube.dae-2fd6d37daf873187971706ab1c0362d5.scn"
+path="res://.import/basicCube.dae-2fd893666ec7dd76a2ebc1232e7e48a3.scn"
 
 [deps]
 
-source_file="res://Assets/World/BasicCube/basicCube.dae"
-dest_files=[ "res://.import/basicCube.dae-2fd6d37daf873187971706ab1c0362d5.scn" ]
+source_file="res://Assets/World/Walls/basicCube.dae"
+dest_files=[ "res://.import/basicCube.dae-2fd893666ec7dd76a2ebc1232e7e48a3.scn" ]
 
 [params]
 

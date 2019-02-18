@@ -2,10 +2,10 @@ extends Spatial
 
 enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 
-export(String) var wallPath = "res://Assets/World/BasicCube/BasicCube.tscn"
-export(String) var pickupPath = "res://Assets/World/Pickup/Pickup.tscn"
 export(CELL_NATURE) var nature = EMPTY
 
+var _wallScene
+var _pickupScene 
 var _actorOnCell = []
 
 
@@ -34,8 +34,7 @@ func getActorOnCell():
 func _initializeCellChildren():
 	match nature:
 		OBSTACLE:
-			var wallScene = load(self.wallPath)
-			var wall_instance = wallScene.instance()
+			var wall_instance = _wallScene.instance()
 			self.add_child(wall_instance)
 			wall_instance.set_name(self.name + "_wall")
 			wall_instance.transform.origin = Vector3(0, 0, 0)
@@ -54,8 +53,7 @@ func _initializeCellChildren():
 			pass
 
 		PICKUP:
-			var pickupScene = load(self.pickupPath)
-			var pickup_instance = pickupScene.instance()
+			var pickup_instance = _pickupScene.instance()
 			self.add_child(pickup_instance)
 			pickup_instance.set_name(self.name + "_pickup")
 			pickup_instance.transform.origin = Vector3(0, 0, 0)
@@ -68,6 +66,9 @@ func _initializeCellChildren():
 	
 func _ready():
 	# Called when the node is added to the scene for the first time.
+	_wallScene = load(Global.wallScenePath + "/" + Global.wallSceneName)
+	_pickupScene = load(Global.pickupScenePath + "/" + Global.pickupSceneName)
+	
 	_initializeCellChildren()
 	pass
 
