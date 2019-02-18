@@ -44,6 +44,7 @@ func _readJsonLevel():
 			self._jsonGrid["Level"]["grid"]["cellSize"][1])
 		self.cellMargin = self._jsonGrid["Level"]["grid"]["cellMargin"]
 		
+		Global.groundSceneName = self._jsonGrid["Level"]["grid"]["groundSceneName"]
 		Global.wallSceneName = self._jsonGrid["Level"]["grid"]["wallSceneName"]
 		Global.pickupSceneName = self._jsonGrid["Level"]["grid"]["pickupSceneName"]
 	

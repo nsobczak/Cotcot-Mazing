@@ -6,6 +6,7 @@ export(CELL_NATURE) var nature = EMPTY
 
 var _wallScene
 var _pickupScene 
+var _groundScene
 var _actorOnCell = []
 
 
@@ -32,6 +33,10 @@ func getActorOnCell():
 
 #_________________________________________________________________________________________
 func _initializeCellChildren():
+	var ground_instance = _groundScene.instance()
+	self.add_child(ground_instance)
+	ground_instance.transform.origin = Vector3(0, 0, 0)
+	
 	match nature:
 		OBSTACLE:
 			var wall_instance = _wallScene.instance()
@@ -46,6 +51,7 @@ func _initializeCellChildren():
 			
 		VOID:
 			find_node("EmptyCell").visible = false
+			ground_instance.visible = false
 			pass
 
 		ACTOR:
@@ -68,6 +74,7 @@ func _ready():
 	# Called when the node is added to the scene for the first time.
 	_wallScene = load(Global.wallScenePath + "/" + Global.wallSceneName)
 	_pickupScene = load(Global.pickupScenePath + "/" + Global.pickupSceneName)
+	_groundScene = load(Global.groundScenePath + "/" + Global.groundSceneName)
 	
 	_initializeCellChildren()
 	pass

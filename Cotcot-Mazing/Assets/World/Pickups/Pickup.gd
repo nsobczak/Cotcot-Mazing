@@ -20,4 +20,5 @@ func _process(delta):
 	# Called every frame. Delta is time since last frame.
 	rotate_x(deg2rad(rotationAngles.x * delta))
 	rotate_y(deg2rad(rotationAngles.y * delta))
-	pass
+	rotate_z(deg2rad(rotationAngles.z * delta))
+

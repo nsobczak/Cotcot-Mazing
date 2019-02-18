@@ -1,7 +1,7 @@
 {
   "Level": {
     "id": "003",
-    "name": "Level003",
+    "name": "Level 003",
     "grid": {
       "size": [
         15,
@@ -12,6 +12,7 @@
         24
       ],
       "cellMargin": 3,
+      "groundSceneName": "GroundMesh.tscn",
       "wallSceneName": "BasicCubeBlack.tscn",
       "pickupSceneName": "PickupBlue.tscn",
       "cells": [ [-2,-1,-1,-1,-1, -1,-1,-1,-2,-2, -2,-1,-1,-1,-1],

@@ -13,4 +13,7 @@ func _ready():
 
 func _pressed():
 	LevelSelection.changeLevelFileName(true)
-	get_tree().change_scene(sceneToOpen)
+	if LevelSelection.isFirstLevelSelected():
+		get_tree().change_scene(Global.mainMenuPath)
+	else:
+		get_tree().change_scene(sceneToOpen)

@@ -1,7 +1,7 @@
 extends Spatial
 
 
-export(String) var jsonLevelFileName = "Level001.json"
+#export(String) var jsonLevelFileName = "Level001.json"
 
 
 func _ready():

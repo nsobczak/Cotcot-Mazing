@@ -7,6 +7,8 @@ var _levels
 var _currentLevelIdx = 0
 var _levelName
 
+
+#_______________________________________________________
 func getLevelName():
 	return self._levelName
 
@@ -21,6 +23,7 @@ func updateCurrentLevel():
 	updateLevelName()
 
 
+#_______________________________________________________
 func _ready():
 	_levels = Global.getLevelFileList()
 
@@ -44,3 +47,9 @@ func changeLevelFileName(increase = true):
 			
 	updateCurrentLevel()
 
+func selectFirstLevel():
+	_currentLevelIdx = 0
+	updateCurrentLevel()
+	
+func isFirstLevelSelected():
+	return _currentLevelIdx == 0

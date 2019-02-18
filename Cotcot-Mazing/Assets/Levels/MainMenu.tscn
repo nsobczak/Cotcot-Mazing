@@ -89,6 +89,7 @@ anchor_bottom = 0.0
 margin_top = 116.0
 margin_right = 976.0
 margin_bottom = 212.0
+startAtFirstLevel = true
 
 [node name="BLevelSelect" parent="MarginContainer/VBoxContainer" index="2" instance=ExtResource( 2 )]
 
