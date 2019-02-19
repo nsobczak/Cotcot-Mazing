@@ -13,7 +13,7 @@
       ],
       "cellMargin": 5,
       "groundSceneName": "GroundMesh.tscn",
-      "wallSceneName": "BasicCubeOrange.tscn",
+      "wallSceneName": "SpikyCube.tscn",
       "pickupSceneName": "PickupRed.tscn",
       "cells": [ [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
                 [-1,0 ,2 ,0 ,0 ,0 ,0 ,2 ,0 ,-1],

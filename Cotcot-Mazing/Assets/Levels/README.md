@@ -19,6 +19,9 @@ Wall scene name:
 - BasicCubeBlack.tscn
 - BasicCubeBrown.tscn
 - BasicCubeOrange.tscn
+- Cross.tscn
+- Spike.tscn
+- SpikyCube.tscn
 
 Pickup scene name:
 - Pickup.tscn
