@@ -109,9 +109,6 @@ func _initActorPositions():
 func _ready():
 	_readJsonLevel()
 
-	var gridSize = getRealGridSize()
-	print("real grid size = ", gridSize)
-	
 	# add cells instances
 	_generate()
 	_initActorPositions()
@@ -123,9 +120,11 @@ func _ready():
 
 #_________________________________________________________________________________________
 func gameOver():
+	print("game over")
 	get_tree().change_scene(screenGameOverPath)
 
 func levelCompleted():
+	print("level completed: {0}".format([Global.getLevelFileName()]))
 	get_tree().change_scene(screenLevelResultPath)
 
 
