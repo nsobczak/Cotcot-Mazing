@@ -69,7 +69,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 min_value = -48.0
@@ -84,7 +84,7 @@ tick_count = 0
 ticks_on_borders = false
 focus_mode = 2
 script = ExtResource( 1 )
-_sections_unfolded = [ "Anchor", "Margin", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Margin", "Mouse", "Size Flags" ]
 DEBUG = false
 
 [connection signal="value_changed" from="HBoxContainer/VolumeSlider" to="HBoxContainer/VolumeSlider" method="_on_VolumeSlider_value_changed"]
