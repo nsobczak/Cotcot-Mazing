@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/UI/Buttons/BCredits.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/UI/Buttons/BQuit.tscn" type="PackedScene" id=4]
 
-[node name="MainMenu" type="MarginContainer" index="0"]
+[node name="MainMenu" type="MarginContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0

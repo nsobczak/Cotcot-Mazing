@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/S_Movement.wav-4bd2da7c1f05ff9db0925d1b7e10d97b.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/S_Movement.wav"
+dest_files=[ "res://.import/S_Movement.wav-4bd2da7c1f05ff9db0925d1b7e10d97b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

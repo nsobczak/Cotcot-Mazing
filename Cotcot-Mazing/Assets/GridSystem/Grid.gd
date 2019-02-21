@@ -3,12 +3,19 @@ extends Spatial
 enum CELL_NATURE { VOID = -2, OBSTACLE, EMPTY, ACTOR, PICKUP, EGG = 10}
 
 # class member variables
+export(bool) var DEBUG = false
+
 export(String) var screenGameOverPath = "res://Assets/UI/Screens/ScreenGameOver.tscn"
 export(String) var screenLevelResultPath = "res://Assets/UI/Screens/ScreenLevelResult.tscn"
 
 export(String) var gridName = "Level"
 export(String) var cellScenePath = "res://Assets/GridSystem/Cell/Cell.tscn"
 export(String) var tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
+
+export(String) var wavPickupFPath = "res://Assets/Audio/S_PickupF.wav"
+export(String) var wavPickupGPath = "res://Assets/Audio/S_PickupG.wav"
+export(String) var wavPickupAPath = "res://Assets/Audio/S_PickupA.wav"
+export(String) var wavPickupBPath = "res://Assets/Audio/S_PickupB.wav"
 
 export(Vector2) var gSize = Vector2(20, 20)
 export(Vector2) var cellSize = Vector2(24, 24)
@@ -69,8 +76,9 @@ func _generate():
 	for i in range(0, self.gSize.x):
 		for j in range(0, self.gSize.y):
 			var cellPosition = Vector2((i+1) * (self.cellSize.x + cellMargin), (j+1) * (self.cellSize.y + cellMargin))
-#			print("cell ({0}, {1}) position is: ({2}, {3})" \
-#			.format([i, j, cellPosition.x, cellPosition.y]))
+			if DEBUG:
+				print("cell ({0}, {1}) position is: ({2}, {3})" \
+					.format([i, j, cellPosition.x, cellPosition.y]))
 			self._gridPositionToReal[Vector2(i, j)] = cellPosition
 			
 			# instantiate cell
@@ -96,14 +104,33 @@ func _generate():
 				_:#default
 					cellScene_instance.setNature(EMPTY)
 			add_child(cellScene_instance)
-#			print(has_node("cellScene_({0},{1})".format([i, j]))) #prints True
+			if DEBUG:
+				print(has_node("cellScene_({0},{1})".format([i, j]))) #prints True
 
 
 func _initActorPositions():
 	for childNode in self.get_children():
 		if (childNode.name == "Player"):
-#			print("init player position")
+			if DEBUG:
+				print("init player position")
 			updateActorGridPosition(childNode.name, ACTOR, self.playerStartCell)
+
+
+func _initAudio():
+	var wavPickup
+	
+	wavPickup = load(self.wavPickupFPath)
+	$ASP_pickupF.stream = wavPickup
+	wavPickup = load(self.wavPickupGPath)
+	$ASP_pickupG.stream = wavPickup
+	wavPickup = load(self.wavPickupAPath)
+	$ASP_pickupA.stream = wavPickup
+	wavPickup = load(self.wavPickupBPath)
+	$ASP_pickupB.stream = wavPickup
+	
+	if $ASP_pickupF.stream == null or $ASP_pickupG.stream == null or \
+		$ASP_pickupA.stream == null or $ASP_pickupB.stream == null:
+		print("a pickupStream is null")
 
 
 func _ready():
@@ -112,6 +139,8 @@ func _ready():
 	# add cells instances
 	_generate()
 	_initActorPositions()
+	
+	_initAudio()
 	
 	self._eggScene = load(self.tailElementPath)
 	if self._eggScene == null:
@@ -159,6 +188,33 @@ func canMoveToCell(gridCoordinates):
 		return (getCellNature(gridCoordinates) >= 0)
 	else:
 		return false
+
+
+func playPickupSound():
+	var i = randi()%7
+	var sound
+	match i:
+		3, 4:
+			sound = $ASP_pickupG
+		5:
+			sound = $ASP_pickupA
+		6:
+			sound = $ASP_pickupB
+		_:
+			sound = $ASP_pickupF
+	
+	var pitchVariation = randi()%3
+	match pitchVariation:
+		0:
+			sound.pitch_scale = 0.8
+		1:
+			sound.pitch_scale = 1.2
+		_:
+			sound.pitch_scale = 1.0
+
+	if DEBUG:
+		print("pickup i value = {0} | pitch_scale = {1}".format([i, sound.pitch_scale]))
+	sound.play()
 
 
 func growTail(oldCell):
@@ -218,13 +274,15 @@ func updateActorGridPosition(actorName, currentCellNature, newGridPosition):
 	
 	if (currentCellNature == ACTOR) and  ($Player.getTailHead() != null):
 		$Player.getTailHead().moveTail(oldCell)
-#		print("move tail, last elt = {0}".format([$Player.getTailHead().getLastElement().name]))
+		if DEBUG:
+			print("move tail, last elt = {0}".format([$Player.getTailHead().getLastElement().name]))
 	
 	# if pickup is in newCell => delete it and add it to player
 	if (newCell.getNature() == PICKUP):
-#		print("getNature() == PICKUP")
 		var pickup = newCell.findActorByName(newCell.name + "_pickup")
 		if (pickup != null):
+			playPickupSound()
+			
 			$Player.updatePickupNumber(pickup.getValue())
 			if $Player.getPickupNumber() >= _pickupTotal:
 				levelCompleted()
@@ -250,8 +308,8 @@ func updateActorGridPosition(actorName, currentCellNature, newGridPosition):
 func moveActor(actorNameToMove, currentCellNature, gridCoordinates):
 	if canMoveToCell(gridCoordinates):
 		updateActorGridPosition(actorNameToMove, currentCellNature, gridCoordinates)
-#	else:
-#		print("can't move to that cell")
+	elif DEBUG:
+		print("can't move to that cell")
 
 
 func moveUp(actorNameToMove, currentCellNature):

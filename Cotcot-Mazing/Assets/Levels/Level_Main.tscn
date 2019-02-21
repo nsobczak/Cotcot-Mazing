@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Levels/Level_Main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/HUD.tscn" type="PackedScene" id=2]
@@ -6,12 +6,12 @@
 [ext_resource path="res://Assets/GridSystem/Grid.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Characters/Chicken/PawnChicken.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Characters/PlayerController.gd" type="Script" id=6]
-[ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Audio/S_Movement.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=8]
 
 [node name="Root" type="Spatial" index="0"]
 
 script = ExtResource( 1 )
-jsonLevelFileName = "Level001.json"
 
 [node name="HUD" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -20,13 +20,8 @@ script = ExtResource( 3 )
 [node name="Grid" parent="." index="1" instance=ExtResource( 4 )]
 
 _sections_unfolded = [ "Transform" ]
-screenGameOverPath = "res://Assets/UI/Screens/ScreenGameOver.tscn"
-screenLevelResultPath = "res://Assets/UI/Screens/ScreenLevelResult.tscn"
-gridName = "Level"
-tailElementPath = "res://Assets/Characters/Egg/Egg.tscn"
-gSize = Vector2( 20, 20 )
+DEBUG = false
 cellSize = Vector2( 24, 24 )
-cellMargin = 3
 playerStartCell = Vector2( 1, 1 )
 
 [node name="Player" parent="Grid" index="0" instance=ExtResource( 5 )]
@@ -34,6 +29,17 @@ playerStartCell = Vector2( 1, 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 25 )
 script = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
+wavMovementPath = "res://Assets/Audio/S_Movement.wav"
+
+[node name="ASP_movement" type="AudioStreamPlayer" parent="Grid/Player" index="2"]
+
+stream = ExtResource( 7 )
+volume_db = -20.0
+pitch_scale = 0.8
+autoplay = false
+mix_target = 0
+bus = "Effects"
+_sections_unfolded = [ "Pause" ]
 
 [node name="Camera" type="Camera" parent="Grid" index="1"]
 
@@ -50,7 +56,7 @@ fov = 70.0
 size = 1.0
 near = 0.05
 far = 500.0
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Pause", "Transform", "Visibility" ]
 followPlayer = true
 playerNodeName = "Player"
