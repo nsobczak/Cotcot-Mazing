@@ -9,7 +9,7 @@
 [ext_resource path="res://Assets/Audio/S_Movement.wav" type="AudioStream" id=7]
 [ext_resource path="res://Assets/GridSystem/Camera.gd" type="Script" id=8]
 
-[node name="Root" type="Spatial" index="0"]
+[node name="Root" type="Spatial"]
 
 script = ExtResource( 1 )
 
@@ -20,7 +20,6 @@ script = ExtResource( 3 )
 [node name="Grid" parent="." index="1" instance=ExtResource( 4 )]
 
 _sections_unfolded = [ "Transform" ]
-DEBUG = false
 cellSize = Vector2( 24, 24 )
 playerStartCell = Vector2( 1, 1 )
 

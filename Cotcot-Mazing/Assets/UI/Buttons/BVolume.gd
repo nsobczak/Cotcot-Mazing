@@ -4,7 +4,7 @@ var _sceneToShow
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
-	_sceneToShow = get_parent().find_node("EltLevelSelection")
+	_sceneToShow = get_parent().find_node("EltVolumeSlider")
 	self.visible = true
 	_sceneToShow.visible = false
 

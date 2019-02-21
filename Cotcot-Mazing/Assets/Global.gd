@@ -13,6 +13,7 @@ export(String) var wallSceneName = "BasicCube.tscn"
 export(String) var pickupScenePath = "res://Assets/World/Pickups"
 export(String) var pickupSceneName = "Pickup.tscn"
 
+var _masterVolume = 1.0
 
 func _ready():
 	pass
@@ -30,6 +31,16 @@ func getLevelFileName():
 
 func setLevelFileName(newFileName):
 	self._jsonLevelFileName = newFileName
+
+
+func getMasterVolume():
+	return self._masterVolume
+
+func setMasterVolume(newValue):
+	
+	self._masterVolume = newValue
+
+
 
 
 func list_files_in_directory(path):
