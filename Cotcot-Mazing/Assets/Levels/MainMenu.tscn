@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Assets/UI/Buttons/BArcade.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/UI/Buttons/BChangeScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/UI/Buttons/BLevelSelect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/UI/Buttons/BVolume.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/UI/Buttons/BCredits.tscn" type="PackedScene" id=4]
@@ -90,6 +90,7 @@ anchor_bottom = 0.0
 margin_top = 96.0
 margin_right = 976.0
 margin_bottom = 172.0
+openLevel = true
 startAtFirstLevel = true
 
 [node name="BLevelSelect" parent="MarginContainer/VBoxContainer" index="2" instance=ExtResource( 2 )]

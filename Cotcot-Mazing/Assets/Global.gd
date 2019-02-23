@@ -5,6 +5,7 @@ export(String) var _jsonLevelsPath = "res://Assets/Levels/JsonLevels"
 export(String) var _jsonLevelFileName = "Level001.json"
 
 export(String) var mainMenuPath = "res://Assets/Levels/MainMenu.tscn"
+export(String) var mainLevelPath = "res://Assets/Levels/Level_Main.tscn"
 
 export(String) var groundScenePath = "res://Assets/GridSystem/Cell/EmptyCell"
 export(String) var groundSceneName = "GroundMesh.tscn"

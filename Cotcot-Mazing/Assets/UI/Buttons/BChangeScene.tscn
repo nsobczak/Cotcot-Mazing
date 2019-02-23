@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/UI/Buttons/BChangeScene.gd" type="Script" id=1]
 
-[node name="BArcade" type="Button" index="0"]
+[node name="BChangeScene" type="Button"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -24,7 +24,6 @@ flat = false
 align = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Anchor", "Focus", "Margin", "Mouse", "Size Flags", "custom_styles" ]
-sceneToOpen = "res://Assets/Levels/Level_Main.tscn"
 startAtFirstLevel = false
 
 

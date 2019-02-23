@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Assets/UI/VolumeSetting/VolumeSlider.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Audio/S_PickupG.wav" type="AudioStream" id=2]
 
 [node name="EltVolumeSlider" type="VBoxContainer"]
 
@@ -86,6 +87,16 @@ focus_mode = 2
 script = ExtResource( 1 )
 _sections_unfolded = [ "Anchor", "Margin", "Mouse", "Size Flags" ]
 DEBUG = false
+wavPickupGPath = "res://Assets/Audio/S_PickupG.wav"
+
+[node name="ASP_wavSample" type="AudioStreamPlayer" parent="HBoxContainer/VolumeSlider" index="0"]
+
+stream = ExtResource( 2 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="value_changed" from="HBoxContainer/VolumeSlider" to="HBoxContainer/VolumeSlider" method="_on_VolumeSlider_value_changed"]
 

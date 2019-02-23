@@ -1,11 +1,15 @@
 extends Button
 
-export(String) var sceneToOpen = "res://Assets/Levels/Level_Main.tscn"
+export(bool) var openLevel = true
 export(bool) var startAtFirstLevel = false
 
+var _sceneToOpen
+
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	pass
+	if openLevel:
+		_sceneToOpen = Global.mainLevelPath
+	else:
+		_sceneToOpen = Global.mainMenuPath
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -16,4 +20,4 @@ func _pressed ():
 	if startAtFirstLevel:
 		LevelSelection.selectFirstLevel()
 	
-	get_tree().change_scene(sceneToOpen)
+	get_tree().change_scene(_sceneToOpen)
