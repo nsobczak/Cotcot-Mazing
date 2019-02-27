@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/UI/Buttons/BLevelSelect.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI/LevelSelection/EltLevelSelection.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UI/Fonts/Cabin/Cabin-Regular-TTF.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/UI/Buttons/BLevelSelect.gd" type="Script" id=2]
+[ext_resource path="res://Assets/UI/LevelSelection/EltLevelSelection.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 24
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="BLevelSelect" type="Panel"]
 
@@ -30,6 +39,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -37,10 +47,10 @@ group = null
 text = "Level Selection"
 flat = false
 align = 1
-script = ExtResource( 1 )
-_sections_unfolded = [ "Anchor", "Margin", "Mouse" ]
+script = ExtResource( 2 )
+_sections_unfolded = [ "Anchor", "Margin", "Mouse", "custom_fonts" ]
 
-[node name="EltLevelSelection" parent="." index="1" instance=ExtResource( 2 )]
+[node name="EltLevelSelection" parent="." index="1" instance=ExtResource( 3 )]
 
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
 

@@ -13,7 +13,10 @@ func _ready():
 
 func _pressed():
 	LevelSelection.changeLevelFileName(true)
+	
 	if LevelSelection.isFirstLevelSelected():
-		get_tree().change_scene(Global.mainMenuPath)
+		#last level has just been completed
+		get_tree().change_scene(Global.creditsScenePath)
+		
 	else:
 		get_tree().change_scene(sceneToOpen)

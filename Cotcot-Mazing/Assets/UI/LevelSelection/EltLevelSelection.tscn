@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Assets/UI/LevelSelection/BMinus.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI/LevelSelection/LabelLevel.gd" type="Script" id=2]
-[ext_resource path="res://Assets/UI/LevelSelection/BPlus.gd" type="Script" id=3]
-[ext_resource path="res://Assets/UI/Buttons/BChangeScene.gd" type="Script" id=4]
+[ext_resource path="res://Assets/UI/Fonts/Cabin/Cabin-Regular-TTF.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/UI/LevelSelection/BMinus.gd" type="Script" id=2]
+[ext_resource path="res://Assets/UI/LevelSelection/LabelLevel.gd" type="Script" id=3]
+[ext_resource path="res://Assets/UI/LevelSelection/BPlus.gd" type="Script" id=4]
+[ext_resource path="res://Assets/UI/Buttons/BChangeScene.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 24
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="EltLevelSelection" type="VBoxContainer"]
 
@@ -52,6 +61,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -59,7 +69,7 @@ group = null
 text = "<"
 flat = false
 align = 1
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 _sections_unfolded = [ "Anchor", "Mouse" ]
 
 [node name="LabelLevel" type="Label" parent="HBoxContainer" index="1"]
@@ -77,13 +87,14 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
 text = "Level"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 _sections_unfolded = [ "Mouse" ]
 
 [node name="BPlus" type="Button" parent="HBoxContainer" index="2"]
@@ -102,6 +113,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -109,7 +121,7 @@ group = null
 text = ">"
 flat = false
 align = 1
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Mouse" ]
 
 [node name="BStartLevelSelected" type="Button" parent="." index="1"]
@@ -128,6 +140,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -135,9 +148,9 @@ group = null
 text = "Start"
 flat = false
 align = 1
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 _sections_unfolded = [ "Anchor", "Margin", "Mouse", "Size Flags" ]
-sceneToOpen = "res://Assets/Levels/Level_Main.tscn"
+openLevel = true
 startAtFirstLevel = false
 
 

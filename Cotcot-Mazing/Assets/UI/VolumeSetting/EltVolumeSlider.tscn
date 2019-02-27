@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/UI/VolumeSetting/VolumeSlider.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Audio/S_PickupG.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/UI/Fonts/Cabin/Cabin-Regular-TTF.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/UI/VolumeSetting/VolumeSlider.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Audio/S_PickupG.wav" type="AudioStream" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 24
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="EltVolumeSlider" type="VBoxContainer"]
 
@@ -49,13 +58,14 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
 text = "Volume"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Mouse" ]
+_sections_unfolded = [ "Mouse", "custom_fonts" ]
 
 [node name="VolumeSlider" type="HSlider" parent="HBoxContainer" index="1"]
 
@@ -84,14 +94,14 @@ editable = true
 tick_count = 0
 ticks_on_borders = false
 focus_mode = 2
-script = ExtResource( 1 )
-_sections_unfolded = [ "Anchor", "Margin", "Mouse", "Size Flags" ]
+script = ExtResource( 2 )
+_sections_unfolded = [ "Anchor", "Margin", "Mouse", "Size Flags", "custom_icons", "custom_styles" ]
 DEBUG = false
 wavPickupGPath = "res://Assets/Audio/S_PickupG.wav"
 
 [node name="ASP_wavSample" type="AudioStreamPlayer" parent="HBoxContainer/VolumeSlider" index="0"]
 
-stream = ExtResource( 2 )
+stream = ExtResource( 3 )
 volume_db = 0.0
 pitch_scale = 1.0
 autoplay = false
